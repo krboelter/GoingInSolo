@@ -1,7 +1,3 @@
-fonts {
-  name: "default"
-  font: "/builtins/fonts/default.font"
-}
 nodes {
   position {
     x: 64.0
@@ -12,9 +8,9 @@ nodes {
     y: 568.0
   }
   color {
-    x: 0.5019608
+    x: 0.6
     y: 0.0
-    z: 0.5019608
+    z: 0.0
   }
   type: TYPE_BOX
   id: "root"

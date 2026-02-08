@@ -1,2 +1,10 @@
 name: "inventory"
 scale_along_z: 0
+embedded_instances {
+  id: "scene_root"
+  data: "components {\n"
+  "  id: \"inventory\"\n"
+  "  component: \"/ui/inventory.gui\"\n"
+  "}\n"
+  ""
+}
