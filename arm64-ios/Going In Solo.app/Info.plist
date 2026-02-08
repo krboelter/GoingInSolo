@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd" >
+<plist version="1.0">
+<dict>
+        <key>BuildMachineOSBuild</key>
+        <string>25B78</string>
+        <key>CFBundleDevelopmentRegion</key>
+        <string>en</string>
+        <key>CFBundleDisplayName</key>
+        <string>Going In Solo</string>
+        <key>CFBundleExecutable</key>
+        <string>GoingInSolo</string>
+        <key>CFBundleIcons</key>
+        <dict>
+                <key>CFBundlePrimaryIcon</key>
+                <dict>
+                        <key>CFBundleIconName</key>
+                        <string>AppIcon</string>
+                        <key>CFBundleIconFiles</key>
+                        <array>
+                                <string>AppIcon60x60</string>
+                        </array>
+                        <key>UIPrerenderedIcon</key>
+                        <false/>
+                </dict>
+        </dict>
+        <key>CFBundleIcons~ipad</key>
+        <dict>
+                <key>CFBundlePrimaryIcon</key>
+                <dict>
+                        <key>CFBundleIconName</key>
+                        <string>AppIcon</string>
+                        <key>CFBundleIconFiles</key>
+                        <array>
+                                <string>AppIcon76x76</string>
+                                <string>AppIcon83.5x83.5</string>
+                        </array>
+                        <key>UIPrerenderedIcon</key>
+                        <false/>
+                </dict>
+        </dict>
+        <key>CFBundleIdentifier</key>
+        <string>kennyb.GoingInSolo</string>
+        <key>CFBundleInfoDictionaryVersion</key>
+        <string>6.0</string>
+        <key>CFBundleName</key>
+        <string></string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>CFBundleShortVersionString</key>
+        <string>1.0</string>
+        <key>CFBundleSignature</key>
+        <string>????</string>
+        <key>CFBundleSupportedPlatforms</key>
+        <array>
+                <string>iPhoneOS</string>
+        </array>
+        <key>CFBundleVersion</key>
+        <string>1.0</string>
+        <key>DTCompiler</key>
+        <string>com.apple.compilers.llvm.clang.1_0</string>
+        <key>DTPlatformBuild</key>
+        <string>23C53</string>
+        <key>DTPlatformName</key>
+        <string>iphoneos</string>
+        <key>DTPlatformVersion</key>
+        <string>26.2</string>
+        <key>DTSDKBuild</key>
+        <string>23C53</string>
+        <key>DTSDKName</key>
+        <string>iphoneos26.2</string>
+        <key>DTXcode</key>
+        <string>2620</string>
+        <key>DTXcodeBuild</key>
+        <string>17C52</string>
+        <key>UIFileSharingEnabled</key>
+        <false/>
+        <key>LSRequiresIPhoneOS</key>
+        <true/>
+        <key>MinimumOSVersion</key>
+        <string>15.0</string>
+        <key>UIDeviceFamily</key>
+        <array>
+                <integer>1</integer>
+                <integer>2</integer>
+        </array>
+        <key>UIStatusBarHidden</key>
+        <true/>
+        <key>UIViewControllerBasedStatusBarAppearance</key>
+        <false/>
+        <key>UIRequiredDeviceCapabilities</key>
+        <array>
+                <string>arm64</string>
+                <string>opengles-3</string>
+        </array>
+        <key>CFBundleLocalizations</key>
+        <array>
+            <string>en</string>
+        </array>
+        <key>UISupportedInterfaceOrientations</key>
+        <array> 
+                <string>UIInterfaceOrientationPortrait</string>
+                <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        </array>
+        <key>UISupportedInterfaceOrientations~ipad</key>
+        <array> 
+                <string>UIInterfaceOrientationPortrait</string>
+                <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        </array>
+
+        <key>CFBundleURLTypes</key>
+        <array>
+        </array>
+
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+                
+        </array>
+
+        <key>UILaunchStoryboardName</key>
+        <string>LaunchScreen</string>
+
+        <key>UIRequiresFullScreen</key>
+        <true/>
+</dict>
+</plist>

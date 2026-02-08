@@ -1,0 +1,3 @@
+function init(self)
+	print("Hello from main - init")
+end

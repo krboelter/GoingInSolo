@@ -1,0 +1,29 @@
+name: "main"
+scale_along_z: 0
+embedded_instances {
+  id: "camera"
+  data: "embedded_components {\n"
+  "  id: \"camera\"\n"
+  "  type: \"camera\"\n"
+  "  data: \"aspect_ratio: 1.0\\n"
+  "fov: 0.7854\\n"
+  "near_z: -1.0\\n"
+  "far_z: 1.0\\n"
+  "orthographic_projection: 1\\n"
+  "orthographic_mode: ORTHO_MODE_AUTO_COVER\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 160.0
+    y: 284.0
+  }
+}
+embedded_instances {
+  id: "playerUI"
+  data: "components {\n"
+  "  id: \"player_data\"\n"
+  "  component: \"/ui/side_menu.gui\"\n"
+  "}\n"
+  ""
+}

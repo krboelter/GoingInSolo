@@ -1,0 +1,10 @@
+TODOs:
+
+--SCRIPTS--
+Player: .lua
+Player inventory: .lua (require in Player.lua for inventory access)
+
+Story (non-dynamic): .txt (pre-load depending on map selection)
+Story (dynamic): .lua
+
+Map locations: .lua (logic tied to story)
