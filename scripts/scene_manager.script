@@ -1,0 +1,57 @@
+local current_proxy = nil
+local PROXY_LOADED = hash("proxy_loaded")
+local PROXY_UNLOADED = hash("proxy_unloaded")
+local OPEN_STORY = hash("open_story")
+local OPEN_DICE = hash("open_dice")
+local OPEN_MAP = hash("open_map")
+local OPEN_TASKS = hash("open_tasks")
+local OPEN_INVENTORY = hash("open_inventory")
+
+local function switch_scene(self, scene_name)
+	local target_proxy = msg.url("#" .. scene_name .. "_proxy")
+
+	if current_proxy and current_proxy == target_proxy then
+		-- we are already in the selected proxy collection, don't unload and reload the same proxy!
+		return
+	end
+	
+	if current_proxy then
+		msg.post(current_proxy, "disable")
+		msg.post(current_proxy, "final")
+		msg.post(current_proxy, "unload")
+		current_proxy = nil
+	end
+
+	msg.post(target_proxy, "async_load")
+end
+
+function init(self)
+	-- load initial menu on startup
+	switch_scene(self, "story")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == PROXY_LOADED then
+		-- initialize and enable
+		msg.post(sender, "init")
+		msg.post(sender, "enable")
+		
+		-- local sender_string = tostring(sender)
+		-- local proxy_name_start = string.find(sender_string, "#") -- can be dangerous if multiple '#' are in the path
+		-- local new_proxy_string = string.sub(sender_string, proxy_name_start, string.len(sender_string) - 1)
+		current_proxy = sender
+	elseif message_id == PROXY_UNLOADED then
+		-- handle unload logic here (if needed)
+		print("unloaded")
+	elseif message_id == OPEN_STORY then
+		switch_scene(self, "story")
+	elseif message_id == OPEN_DICE then
+		switch_scene(self, "dice")
+	elseif message_id == OPEN_MAP then
+		switch_scene(self, "map")
+	elseif message_id == OPEN_TASKS then
+		switch_scene(self, "tasks")
+	elseif message_id == OPEN_INVENTORY then
+		switch_scene(self, "inventory")
+	end
+end
