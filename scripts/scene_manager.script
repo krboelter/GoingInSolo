@@ -36,9 +36,6 @@ function on_message(self, message_id, message, sender)
 		msg.post(sender, "init")
 		msg.post(sender, "enable")
 		
-		-- local sender_string = tostring(sender)
-		-- local proxy_name_start = string.find(sender_string, "#") -- can be dangerous if multiple '#' are in the path
-		-- local new_proxy_string = string.sub(sender_string, proxy_name_start, string.len(sender_string) - 1)
 		current_proxy = sender
 	elseif message_id == PROXY_UNLOADED then
 		-- handle unload logic here (if needed)

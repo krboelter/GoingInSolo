@@ -1,11 +1,18 @@
-TODOs:
-
 --SCRIPTS--
 Player: .lua
 Player inventory: .lua (require in Player.lua for inventory access)
 
-Story (non-dynamic): .txt (pre-load depending on map selection)
+Story (non-dynamic): .txt (long strings, pre-load depending on map selection)
 Story (dynamic): .lua
 
 Map: gui
 Map data: .lua (logic tied to story)
+
+--OPERATIONS--
+story.lua and player_dialog.lua should "sync" with each other.
+story.lua will have a question (key should include the string question to indicate a response is required).
+player_dialog.lua should have an associated key with the player's responses.
+A dialog manager file (.script) should manage all of the player responses and 'save' the responses in a .txt file (or other save file format).
+* the matching key should be passed as a param as well as the associated answer ('a', 'b', 'c', 'd', etc.)
+* this will eliminate any need to manually save (although we may still want a manual save feature)
+TODO: We need some way to track status of answers. How do we keep memory of player responses that might affect the story?

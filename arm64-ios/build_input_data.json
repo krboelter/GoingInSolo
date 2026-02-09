@@ -1,4 +1,9 @@
 {
+  "project_git" : {
+    "sha1" : "c5aecff9c6bef3ff5ffd1eb8e206a36e758efb93",
+    "origin" : "git@github.com:krboelter/GoingInSolo.git",
+    "branch" : "main"
+  },
   "bob_arguments" : {
     "sha1" : "16c6fd602f32de4814660672c38ce3ccbbc1fb59",
     "version" : "1.12.1",
