@@ -45,7 +45,7 @@ function on_input(self, action_id, action)
 				msg.post(SCENE_MAN_PATH, "open_inventory")
 			end
 		elseif action.released and self.selected then
-			print(self.selected, "selected address")
+			self.selected = nil
 		end
 	end
 end

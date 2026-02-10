@@ -1,0 +1,19 @@
+function init(self)
+	-- initialize all buttons for user selections in dialog
+end
+
+function final(self)
+	-- Save state of the story
+end
+
+function update(self, dt)
+	-- main update loop (needed?)
+end
+
+function on_message(self, message_id, message, sender)
+	-- messages
+end
+
+function on_input(self, action_id, action)
+	-- handle selections
+end
