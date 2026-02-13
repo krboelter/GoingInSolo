@@ -1,5 +1,7 @@
 [project]
 title = Going In Solo
+dependencies#0 = https://github.com/Insality/druid/archive/refs/tags/1.1.0.zip
+dependencies#1 = https://github.com/Insality/defold-event/archive/refs/tags/12.zip
 
 [bootstrap]
 main_collection = /main/main.collectionc

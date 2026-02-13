@@ -42,7 +42,26 @@ nodes {
   pivot: PIVOT_NW
   parent: "root"
   inherit_alpha: true
+  clipping_mode: CLIPPING_MODE_STENCIL
   size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "story_text_content"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_NW
+  parent: "story_text_container"
+  inherit_alpha: true
+  clipping_mode: CLIPPING_MODE_STENCIL
 }
 nodes {
   scale {
@@ -51,7 +70,6 @@ nodes {
   }
   size {
     x: 400.0
-    y: 200.0
   }
   color {
     x: 0.0
@@ -59,15 +77,13 @@ nodes {
     z: 0.0
   }
   type: TYPE_TEXT
-  text: "Hello World"
   font: "default"
   id: "story_text"
   xanchor: XANCHOR_LEFT
   yanchor: YANCHOR_TOP
   pivot: PIVOT_NW
-  adjust_mode: ADJUST_MODE_STRETCH
   line_break: true
-  parent: "story_text_container"
+  parent: "story_text_content"
   inherit_alpha: true
 }
 nodes {
