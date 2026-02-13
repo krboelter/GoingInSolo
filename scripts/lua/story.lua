@@ -3,16 +3,13 @@
 -- NPC responses may have multiple dialog options. Associate each response key with the player dialog key for matching dialog.
 -- If not all responses have an associated dialog, 'response' will be used as the generic NPC response (if applicable).
 
-require("player_dialog.lua")
-require("player.lua")
-
 local story = {}
 
 story.intro = {
-	unconcious = "It's dark. Quiet. You slowly regain conciousnes as your eyes blink from fatigue.",
+	unconscious = "It's dark. Quiet. You slowly regain consciousnes as your eyes blink from fatigue.",
 	bound = "Your hands are bound. Your memory, hazy. You are slumped against the wall and you have no recolection of how you ended up here.",
 	where = "Where was here?",
-	cell = "You quickly look around and the only thing you see is the dark cell surrounding you. A few damp cobblestones glisten from the moonlight shining in from a small window above your head.",
+	cell = "You quickly look around and the only thing you see is the dark cell surrounding you. A few damp cobblestones glisten from the moonlight shining in from a small window above your head.\n\n",
 	man = "Your eyes stray from the window, following the moonlight, until your gaze is met by a dark, hooded figure.",
 	man_question_1 = "That was some trick you pulled back there.",
 	man_response_1 = {
@@ -26,7 +23,19 @@ story.intro = {
 		c = "A punishment too sweet for a murderer, I'm affraid.",
 		d = "The silence of a murderer is deafening."
 	},
-	fin = "Immediately 2 large men burst through the door. They pick you up violently, slip a sack over your head, and lead you through a long, dark hallway..."
+	fin = "Immediately 2 large men burst through the door. They pick you up violently, slip a sack over your head, and lead you through a long, dark hallway...",
+	sequence_key = {
+		"unconscious",
+		"bound",
+		"where",
+		"cell",
+		"man",
+		"man_question_1",
+		"man_response_1",
+		"man_question_2",
+		"man_response_2",
+		"fin"
+	}
 }
 
 return story

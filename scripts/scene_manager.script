@@ -26,6 +26,8 @@ local function switch_scene(self, scene_name)
 end
 
 function init(self)
+	-- aquire input focus for proxy collections
+	msg.post(".", "acquire_input_focus")
 	-- load initial menu on startup
 	switch_scene(self, "story")
 end
@@ -51,4 +53,8 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == OPEN_INVENTORY then
 		switch_scene(self, "inventory")
 	end
+end
+
+function final(self)
+	msg.post(".", "release_input_focus")
 end

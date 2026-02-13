@@ -1,5 +1,5 @@
 function init(self)
-	-- all of the "self" proclaimed trackers go here
+	-- all of the "self" declared trackers go here
 	self.story = require "./lua/story"
 	self.current_chapter = "intro" -- this will be dynamic from the last saved chapter
 end

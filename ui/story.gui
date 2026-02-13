@@ -36,7 +36,7 @@ nodes {
     y: 100.0
   }
   type: TYPE_BOX
-  id: "story_text"
+  id: "story_text_container"
   xanchor: XANCHOR_LEFT
   yanchor: YANCHOR_TOP
   pivot: PIVOT_NW
@@ -61,13 +61,55 @@ nodes {
   type: TYPE_TEXT
   text: "Hello World"
   font: "default"
-  id: "text"
+  id: "story_text"
   xanchor: XANCHOR_LEFT
   yanchor: YANCHOR_TOP
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
-  parent: "story_text"
+  line_break: true
+  parent: "story_text_container"
   inherit_alpha: true
+}
+nodes {
+  position {
+    y: -368.0
+  }
+  size {
+    x: 256.0
+    y: 200.0
+  }
+  type: TYPE_BOX
+  id: "next"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_NW
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "root"
+  inherit_alpha: true
+  alpha: 0.0
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 26.0
+    y: -128.0
+  }
+  size {
+    x: 200.0
+    y: 140.0
+  }
+  color {
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "player_response_container"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_NW
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

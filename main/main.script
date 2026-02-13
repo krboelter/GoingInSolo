@@ -1,3 +1,29 @@
+local save_manager = require "scripts.lua.save_manager"
+
+local SAVE_FILE = sys.get_save_file("com.goinginsolo.game", "gamestate.dat")
+
+local function load_save()
+	local loaded = sys.load(SAVE_FILE)
+	if next(loaded) ~= nil then
+		for k, v in pairs(loaded) do
+			save_manager.save_data[k] = v
+		end
+
+		print("Save loaded successfully!")
+	else
+		print("No save file found -> using defaults")
+	end
+end
+
+local function save_game()
+	local ok = sys.save(SAVE_FILE, save_manager.save_data)
+	if ok then
+		print("Game saved!")
+	else
+		print("Save failed!")
+	end
+end
+
 function init(self)
-	print("Hello from main - init")
+	load_save()
 end
