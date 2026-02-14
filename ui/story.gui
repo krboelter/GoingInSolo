@@ -35,6 +35,11 @@ nodes {
     x: 200.0
     y: 100.0
   }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
   type: TYPE_BOX
   id: "story_text_container"
   xanchor: XANCHOR_LEFT

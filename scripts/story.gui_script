@@ -1,20 +1,8 @@
 local druid = require("druid.druid")
 local save_manager = require "scripts.lua.save_manager"
-local story = require "scripts.lua.story"
+local story_manager = require "scripts.lua.story_manager"
 
 local TOUCH = hash("touch")
-
-local function fetch_story_text(self)
-	local story_text = {}
-
-	-- always return the whole story up to the most visited sequence_key
-	for i = 1, self.current_sequence_key do
-		local sequence_name = story[self.current_chapter].sequence_key[i]
-		table.insert(story_text, story[self.current_chapter][sequence_name] .. "\n")
-	end
-	
-	return table.concat(story_text, "\n")
-end
 
 local function update_text_size(self)
 	local font_name = gui.get_font(self.story_text_node)
@@ -33,22 +21,22 @@ end
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.druid = druid.new(self)
+
+	-- init save data
+	story_manager:set_chapter(save_manager.save_data.story_chapter)
+	story_manager:set_sequence(save_manager.save_data.sequence_key)
 	
 	-- declare story scope
 	self.scroll = self.druid:new_scroll("story_text_container", "story_text_content")
 	self.scroll:set_horizontal_scroll(false)
 	self.scroll:set_inert(true)
-	
-	self.save_data = save_manager.save_data
-	self.current_chapter = save_manager.save_data.story_chapter
-	self.current_sequence_key = self.save_data.sequence_key -- number associated with the text
 
 	-- declare nodes
 	self.story_text_node = gui.get_node("story_text")
 	self.text_content_node = gui.get_node("story_text_content")
 	self.next = gui.get_node("next")
 
-	gui.set_text(self.story_text_node, fetch_story_text(self))
+	gui.set_text(self.story_text_node, story_manager:fetch_next_sequence())
 end
 
 function on_message(self, message_id, message, sender)
@@ -62,13 +50,16 @@ end
 function on_input(self, action_id, action)
 	local is_input_consumed = self.druid:on_input(action_id, action)
 	
-	-- when click within text contaner (or root?); current_sequence_key++
 	if not is_input_consumed and action_id == TOUCH and action.pressed then
 		if gui.pick_node(self.next, action.x, action.y) then
-			self.current_sequence_key = self.current_sequence_key + 1
-			gui.set_text(self.story_text_node, fetch_story_text(self))
-			update_text_size(self)
+			if story_manager.state == "pause" then
+				-- story is paused to await player input
+				-- TODO: create option buttons using druid (dynamic based on options - returned from player_dialog)
+			else
+				gui.set_text(self.story_text_node, story_manager:fetch_next_sequence())
+			end
 
+			update_text_size(self)
 			-- handle druid
 			self.scroll:update_view_size()
 		end
