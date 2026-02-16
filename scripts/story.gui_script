@@ -4,6 +4,7 @@ local story_manager = require "scripts.lua.story_manager"
 
 local TOUCH = hash("touch")
 
+-- TODO: bug - when the player responds the new_height gets all messed up...
 local function update_text_size(self)
 	local font_name = gui.get_font(self.story_text_node)
 	local font = gui.get_font_resource(font_name)
@@ -19,8 +20,9 @@ local function update_text_size(self)
 end
 
 local function destroy_player_options(self)
-	for _, button in pairs(self.player_option_buttons) do
-		button:remove()
+	for _, item in pairs(self.player_option_buttons) do
+		self.druid:remove(item.button)
+		gui.delete_node(item.box)
 	end
 
 	self.player_option_buttons = {}
@@ -42,11 +44,22 @@ local function create_player_option(self, option_key, option_text, index)
 	gui.set_text(text_nodes, option_text)
 
 	local button = self.druid:new_button(box, function()
-		story_manager:select_player_option(option_key) -- "a", "b", ..."z"
+		gui.set_text(self.story_text_node, story_manager:select_player_option(option_key)) -- "a", "b", ..."z"
+		-- TODO: this is adding too much space - could be something with the \n??
+		-- TODO: also we might be able to handle this in a way we don't have to call update_text_size, and scroll stuff in multiple places
+		update_text_size(self)
+		self.scroll:update_view_size()
+		-- handle auto-scroll
+		timer.delay(0, false, function()
+			self.scroll:scroll_to_percent(vmath.vector3(0, 0, 0), true)
+		end)
 		destroy_player_options(self)
 	end)
 
-	table.insert(self.player_option_buttons, button)
+	table.insert(self.player_option_buttons, {
+		button = button,
+		box = box
+	})
 end
 
 function init(self)
@@ -91,6 +104,7 @@ function on_message(self, message_id, message, sender)
 end
 
 function update(self, dt)
+	-- TODO: implement typewriter.lua
 	self.druid:update(dt)
 end
 
@@ -102,8 +116,11 @@ function on_input(self, action_id, action)
 			gui.set_text(self.story_text_node, story_manager:fetch_next_sequence())
 
 			update_text_size(self)
-			-- handle druid
 			self.scroll:update_view_size()
+			-- handle auto-scrolling
+			timer.delay(0, false, function()
+				self.scroll:scroll_to_percent(vmath.vector3(0, 0, 0), true)
+			end)
 		end
 	end
 

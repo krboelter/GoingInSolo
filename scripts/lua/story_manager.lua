@@ -60,6 +60,19 @@ function M:fetch_next_sequence()
 	return table.concat(self.story_table, "\n")
 end
 
+function M:fetch_npc_response(option)
+	self.sequence = self.sequence + 1 -- move to the response
+	local response_options = self.chapter.data[self:fetch_sequence_name(self.sequence)]
+
+	if response_options[option] then
+		table.insert(self.story_table, response_options[option] .. "\n")
+	else
+		table.insert(self.story_table, response_options["response"] .. "\n")
+	end
+	
+	return table.concat(self.story_table, "\n")
+end
+
 -- fetches the player options table
 function M:fetch_player_options()
 	return player_dialog[self.chapter.name][self:fetch_sequence_name(self.sequence)]
@@ -67,14 +80,12 @@ end
 
 -- @param option string "a", "b", ..."z"
 function M:select_player_option(option)
-	local player_selection = "(You): " .. player_dialog[self.chapter.name][self:fetch_sequence_name(self.sequence)][option] .. "\n"
+	local player_selection = "(You): " .. player_dialog[self.chapter.name][self:fetch_sequence_name(self.sequence)][option]
 	
 	table.insert(self.story_table, player_selection)
 	set_state("running")
 
-	-- TODO: error here because we need to return the response based on the player's choice
-	-- normally it just gives the next text but this time it needs to give man_response_1[c] | whatever
-	return self:fetch_next_sequence()
+	return self:fetch_npc_response(option)
 end
 
 return M
