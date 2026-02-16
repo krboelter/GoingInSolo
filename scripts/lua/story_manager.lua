@@ -3,11 +3,23 @@ local player_dialog = require "scripts.lua.player_dialog"
 
 local M = {}
 
-M.chapter = nil
-M.sequence = nil
+M.chapter = nil -- string
+M.sequence = nil -- number
 M.story_table = {} -- Array<string>
 M.state = "running" -- "running" | "paused"
-M.player_options = {}
+M.on_state_changed = nil -- callback
+
+-- @private when state changes - runs the callback given to on_state_changed
+-- @param new_state string "running" | "paused"
+local function set_state(new_state)
+	if M.state ~= new_state then
+		M.state = new_state
+		
+		if M.on_state_changed then
+			M.on_state_changed(new_state)
+		end
+	end
+end
 
 -- MUST GET CALLED EVERY TIME WE USE STORY_MANAGER
 function M:set_chapter(chap)	
@@ -38,25 +50,30 @@ function M:fetch_next_sequence()
 	
 	if self.state == "running" then
 		self.sequence = self.sequence + 1
-		table.insert(self.story_table, self.chapter[self:fetch_sequence_name(self.sequence)] .. "\n")
+		table.insert(self.story_table, self.chapter.data[self:fetch_sequence_name(self.sequence)] .. "\n")
 	end
 	
 	if string.find(self.chapter.sequence_key[self.sequence], "question") then
-		self.state = "paused"
+		set_state("paused")
 	end
 
 	return table.concat(self.story_table, "\n")
 end
 
+-- fetches the player options table
+function M:fetch_player_options()
+	return player_dialog[self.chapter.name][self:fetch_sequence_name(self.sequence)]
+end
+
+-- @param option string "a", "b", ..."z"
 function M:select_player_option(option)
-	local player_selection = "(You): " .. player_dialog[self:fetch_sequence_name(self.sequence)][option] .. "\n"
+	local player_selection = "(You): " .. player_dialog[self.chapter.name][self:fetch_sequence_name(self.sequence)][option] .. "\n"
 	
 	table.insert(self.story_table, player_selection)
-	self.state = "running"
+	set_state("running")
 
-	-- reset player options (hide from view)
-	self.player_options = {}
-
+	-- TODO: error here because we need to return the response based on the player's choice
+	-- normally it just gives the next text but this time it needs to give man_response_1[c] | whatever
 	return self:fetch_next_sequence()
 end
 

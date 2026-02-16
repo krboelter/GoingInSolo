@@ -132,5 +132,48 @@ nodes {
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }
+nodes {
+  size {
+    x: 200.0
+    y: 30.0
+  }
+  color {
+    x: 0.2
+    y: 0.101960786
+    z: 0.5019608
+  }
+  type: TYPE_BOX
+  id: "player_selection_template"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_NW
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "player_response_container"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  enabled: false
+}
+nodes {
+  position {
+    x: 5.0
+    y: -15.0
+  }
+  scale {
+    x: 0.5
+    y: 0.5
+  }
+  size {
+    x: 380.0
+    y: 60.0
+  }
+  type: TYPE_TEXT
+  font: "default"
+  id: "player_selection_text_template"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_W
+  parent: "player_selection_template"
+  inherit_alpha: true
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

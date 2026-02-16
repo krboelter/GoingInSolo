@@ -18,6 +18,37 @@ local function update_text_size(self)
 	end
 end
 
+local function destroy_player_options(self)
+	for _, button in pairs(self.player_option_buttons) do
+		button:remove()
+	end
+
+	self.player_option_buttons = {}
+end
+
+local function create_player_option(self, option_key, option_text, index)
+	local nodes = gui.clone_tree(gui.get_node("player_selection_template"))
+	local box = nodes["player_selection_template"]
+	local text_nodes = nodes["player_selection_text_template"]
+
+	-- re-parent the cloned box to the container
+	gui.set_parent(box, gui.get_node("player_response_container"))
+	
+	local size = gui.get_size(box)
+	local y_offset = size.y * (index - 1) -- maybe add spacing??
+
+	gui.set_position(box, vmath.vector3(0, -y_offset, 0))
+	gui.set_enabled(box, true)
+	gui.set_text(text_nodes, option_text)
+
+	local button = self.druid:new_button(box, function()
+		story_manager:select_player_option(option_key) -- "a", "b", ..."z"
+		destroy_player_options(self)
+	end)
+
+	table.insert(self.player_option_buttons, button)
+end
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.druid = druid.new(self)
@@ -35,8 +66,24 @@ function init(self)
 	self.story_text_node = gui.get_node("story_text")
 	self.text_content_node = gui.get_node("story_text_content")
 	self.next = gui.get_node("next")
+	self.player_option_buttons = {}
 
 	gui.set_text(self.story_text_node, story_manager:fetch_next_sequence())
+
+	-- decide what we want to do when the story get's paused
+	story_manager.on_state_changed = function(new_state)
+		if new_state == "paused" then
+			-- create buttons based on the number of options
+			local player_options = story_manager:fetch_player_options()
+			local idx = 1
+
+			-- TODO: currently the options come in randomly (lua nature), either sort keys (alphabetically) or find another solution
+			for k, v in pairs(player_options) do
+				create_player_option(self, k, v, idx)
+				idx = idx + 1
+			end
+		end
+	end
 end
 
 function on_message(self, message_id, message, sender)
@@ -51,13 +98,8 @@ function on_input(self, action_id, action)
 	local is_input_consumed = self.druid:on_input(action_id, action)
 	
 	if not is_input_consumed and action_id == TOUCH and action.pressed then
-		if gui.pick_node(self.next, action.x, action.y) then
-			if story_manager.state == "pause" then
-				-- story is paused to await player input
-				-- TODO: create option buttons using druid (dynamic based on options - returned from player_dialog)
-			else
-				gui.set_text(self.story_text_node, story_manager:fetch_next_sequence())
-			end
+		if story_manager.state ~= "paused" and gui.pick_node(self.next, action.x, action.y) then
+			gui.set_text(self.story_text_node, story_manager:fetch_next_sequence())
 
 			update_text_size(self)
 			-- handle druid

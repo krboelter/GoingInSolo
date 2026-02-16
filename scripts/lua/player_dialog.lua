@@ -1,8 +1,8 @@
 -- This file is for player responses to questions. It should give each option for an associated key from story.lua.
 
-local player_dialog = {}
+local M = {}
 
-player_dialog.intro = {
+M.intro = {
 	man_question_1 = {
 		a = "What are you talking about?",
 		b = "You think that was a trick?",
@@ -17,4 +17,4 @@ player_dialog.intro = {
 	}
 }
 
-return player_dialog
+return M
