@@ -36,8 +36,9 @@ function M:set_sequence(sequence_number)
 	self.sequence = sequence_number
 end
 
-function M:fetch_sequence_name(seq_key)
-	return self.chapter.sequence_key[seq_key]
+function M:fetch_sequence_name(seq_num)
+	local name, _ = next(self.chapter.data[seq_num])
+	return name
 end
 
 -- fetches the next story sequence (if running)
@@ -47,44 +48,51 @@ function M:fetch_next_sequence()
 		print("Ensure chapter and sequence have been set first!")
 		return nil
 	end
+
+	local text = nil
 	
 	if self.state == "running" then
 		self.sequence = self.sequence + 1
-		table.insert(self.story_table, self.chapter.data[self:fetch_sequence_name(self.sequence)] .. "\n")
+		text = self.chapter.data[self.sequence]
 	end
-	
-	if string.find(self.chapter.sequence_key[self.sequence], "question") then
+
+	local _, sequence_data = next(self.chapter.data[self.sequence])
+	if string.find(sequence_data, "question") then
 		set_state("paused")
 	end
 
-	return table.concat(self.story_table, "\n")
+	return text
 end
 
 function M:fetch_npc_response(option)
 	self.sequence = self.sequence + 1 -- move to the response
-	local response_options = self.chapter.data[self:fetch_sequence_name(self.sequence)]
+	local response_options = self.chapter.data[self.sequence]
 
+	local text = {}
+
+	-- TODO: fix
 	if response_options[option] then
-		table.insert(self.story_table, response_options[option] .. "\n")
+		text = response_options[option]
 	else
-		table.insert(self.story_table, response_options["response"] .. "\n")
+		text = response_options["response"]
 	end
 	
-	return table.concat(self.story_table, "\n")
+	return text
 end
 
 -- fetches the player options table
 function M:fetch_player_options()
-	return player_dialog[self.chapter.name][self:fetch_sequence_name(self.sequence)]
+	return player_dialog[self.chapter.name][self.sequence]
 end
 
 -- @param option string "a", "b", ..."z"
 function M:select_player_option(option)
-	local player_selection = "(You): " .. player_dialog[self.chapter.name][self:fetch_sequence_name(self.sequence)][option]
+	local player_selection = "(You): " .. player_dialog[self.chapter.name][self.sequence][option]
 	
-	table.insert(self.story_table, player_selection)
+	local text = player_selection .. "\n"
 	set_state("running")
 
+	-- TODO: fix this - might need to have these be 2 separate operations...
 	return self:fetch_npc_response(option)
 end
 

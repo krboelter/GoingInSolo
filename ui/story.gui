@@ -33,7 +33,7 @@ nodes {
   }
   size {
     x: 200.0
-    y: 100.0
+    y: 140.0
   }
   color {
     x: 0.0
@@ -53,7 +53,7 @@ nodes {
 nodes {
   size {
     x: 200.0
-    y: 100.0
+    y: 140.0
   }
   color {
     x: 0.0
@@ -83,13 +83,14 @@ nodes {
   }
   type: TYPE_TEXT
   font: "default"
-  id: "story_text"
+  id: "text_template"
   xanchor: XANCHOR_LEFT
   yanchor: YANCHOR_TOP
   pivot: PIVOT_NW
   line_break: true
   parent: "story_text_content"
   inherit_alpha: true
+  enabled: false
 }
 nodes {
   position {
@@ -113,7 +114,7 @@ nodes {
 nodes {
   position {
     x: 26.0
-    y: -128.0
+    y: -168.0
   }
   size {
     x: 200.0
