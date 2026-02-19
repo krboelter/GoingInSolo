@@ -11,15 +11,19 @@ local function get_text_size(self, node)
 	local font_name = gui.get_font(node) -- TODO: this only gets the size of the current node (not all combined)
 	local font = gui.get_font_resource(font_name)
 	local text = gui.get_text(node)
-	local metrics = resource.get_text_metrics(font, text)
-	
-	return metrics.height
-	--local new_height = metrics.height
 
-	--if new_height >= content_box_size.y then
-		-- only increase scroll_text_content box new text exceeds current content height
-		--gui.set_size(self.text_content_node, vmath.vector3(content_box_size.x, new_height, 0))
-	--end
+	local options = {
+		width = gui.get_size(node).x,
+		line_break = gui.get_line_break(node),
+		leading = gui.get_leading(node),
+		tracking = gui.get_tracking(node)
+	}
+	local metrics = resource.get_text_metrics(font, text, options)
+
+	local scale = gui.get_scale(node)
+	local rendered_height = metrics.height * scale.y
+	
+	return rendered_height
 end
 
 local function write_text(self, text_table)
@@ -31,28 +35,39 @@ local function write_text(self, text_table)
 		self.current_widget = nil
 	end
 	
-	local _, text = next(text_table)
-	local current_content_size = gui.get_size(self.text_content_node)
+	local name, text = next(text_table)
+	local current_content_size = gui.get_size(self.story_text_content)
 
 	local nodes = gui.clone_tree(gui.get_node("text_template"))
 	local new_text_node = nodes["text_template"]
-	-- temporarily set text to measure height
+	gui.set_id(new_text_node, "text_node_" .. name)
+	gui.set_parent(new_text_node, self.story_text_content, true)
+	gui.set_pivot(new_text_node, gui.PIVOT_NW)
+	
+	-- temporarily set text to measure new text height
 	gui.set_text(new_text_node, text)
 	local new_text_size = get_text_size(self, new_text_node)
 	-- remove text after measurements so we can use the typewriter
 	gui.set_text(new_text_node, "")
 
-	local buffer = 20
-	local new_content_height = current_content_size.y + new_text_size + buffer
+	local buffer = 10
+	local new_content_height = new_text_size + buffer
 	gui.set_enabled(new_text_node, true)
+	gui.set_position(new_text_node, self.previous_content_position)
 
-	if new_content_height >= current_content_size.y then
-		gui.set_size(new_text_node, vmath.vector3(current_content_size.x, new_content_height, 0)) -- consider scale??
+	-- new y for the next text sequence
+	local new_y = self.previous_content_position.y - new_content_height
+	local new_text_node_position = vmath.vector3(self.previous_content_position.x, new_y, self.previous_content_position.z)
+	self.previous_content_position = new_text_node_position
+
+	if -new_text_node_position.y >= current_content_size.y then
+		local new_container_height = -new_text_node_position.y + buffer
+		gui.set_size(self.story_text_content, vmath.vector3(current_content_size.x, new_container_height, 0))
 	end
 
 	self.scroll:update_view_size()
 	
-	-- handle auto-scroll
+	-- handle auto-scroll before new text shows - otherwise we could add this to the typewriter callback
 	timer.delay(0, false, function()
 		self.scroll:scroll_to_percent(vmath.vector3(0, 0, 0), true)
 	end)
@@ -62,7 +77,7 @@ local function write_text(self, text_table)
 		text_node = new_text_node,
 		timer_handle = nil
 	}
-	self.current_widget = typewriter.new(new_text_node, 0.05)
+	self.current_widget = typewriter.new(new_text_node, 0.02)
 	self.current_widget:type_text(text)
 	self.current_widget_text = text
 end
@@ -120,10 +135,11 @@ function init(self)
 	self.scroll = self.druid:new_scroll("story_text_container", "story_text_content")
 	self.scroll:set_horizontal_scroll(false)
 	self.scroll:set_inert(true)
+	self.previous_content_position = vmath.vector3(0, 0, 0)
 
 	-- declare nodes
 	self.text_widgets = {} -- set to table because we use gui.clone_tree()
-	self.text_content_node = gui.get_node("story_text_content")
+	self.story_text_content = gui.get_node("story_text_content")
 	self.next = gui.get_node("next")
 	self.player_option_buttons = {}
 
@@ -151,7 +167,6 @@ function on_message(self, message_id, message, sender)
 end
 
 function update(self, dt)
-	-- TODO: implement typewriter.lua
 	self.druid:update(dt)
 end
 
