@@ -8,6 +8,7 @@ M.sequence = nil -- number
 M.story_table = {} -- Array<string>
 M.state = "running" -- "running" | "paused"
 M.on_state_changed = nil -- callback
+M.last_player_response = nil -- "a", "b", "c" ... "z"
 
 -- @private when state changes - runs the callback given to on_state_changed
 -- @param new_state string "running" | "paused"
@@ -56,44 +57,40 @@ function M:fetch_next_sequence()
 		text = self.chapter.data[self.sequence]
 	end
 
-	local _, sequence_data = next(self.chapter.data[self.sequence])
-	if string.find(sequence_data, "question") then
+	local sequence_key, _ = next(self.chapter.data[self.sequence])
+	if string.find(sequence_key, "question") then
 		set_state("paused")
 	end
 
 	return text
 end
 
-function M:fetch_npc_response(option)
-	self.sequence = self.sequence + 1 -- move to the response
-	local response_options = self.chapter.data[self.sequence]
+function M:fetch_npc_response()
+	local selection = self.chapter.data[self.sequence][self:fetch_sequence_name(self.sequence)][self.last_player_response]
+	local unique_response_key = self:fetch_sequence_name(self.sequence) .. "_" .. self.last_player_response
 
-	local text = {}
-
-	-- TODO: fix
-	if response_options[option] then
-		text = response_options[option]
-	else
-		text = response_options["response"]
+	if selection then
+		return { [unique_response_key] = selection }
 	end
-	
-	return text
+	return { [unique_response_key] = self.chapter.data[self.sequence][self:fetch_sequence_name(self.sequence)]["response"] }
 end
 
 -- fetches the player options table
 function M:fetch_player_options()
-	return player_dialog[self.chapter.name][self.sequence]
+	return player_dialog[self.chapter.name][self:fetch_sequence_name(self.sequence)]
 end
 
--- @param option string "a", "b", ..."z"
-function M:select_player_option(option)
-	local player_selection = "(You): " .. player_dialog[self.chapter.name][self.sequence][option]
-	
-	local text = player_selection .. "\n"
+function M:select_player_option(index)
+	local letter, response_text = next(player_dialog[self.chapter.name][self:fetch_sequence_name(self.sequence)][index])
+	local player_selection_text = "(You): " .. response_text
+
+	self.last_player_response = letter
+	self.sequence = self.sequence + 1
+
 	set_state("running")
 
-	-- TODO: fix this - might need to have these be 2 separate operations...
-	return self:fetch_npc_response(option)
+	local unique_response_key = self:fetch_sequence_name(self.sequence) .. "_" .. letter
+	return { [unique_response_key] = player_selection_text }
 end
 
 return M

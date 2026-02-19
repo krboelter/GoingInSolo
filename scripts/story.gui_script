@@ -91,7 +91,7 @@ local function destroy_player_options(self)
 	self.player_option_buttons = {}
 end
 
-local function create_player_option(self, option_key, option_text, index)
+local function create_player_option(self, option_text, index)
 	local nodes = gui.clone_tree(gui.get_node("player_selection_template"))
 	local box = nodes["player_selection_template"]
 	local text_nodes = nodes["player_selection_text_template"]
@@ -107,10 +107,10 @@ local function create_player_option(self, option_key, option_text, index)
 	gui.set_text(text_nodes, option_text)
 
 	local button = self.druid:new_button(box, function()
-		-- gui.set_text(self.story_text_node, story_manager:select_player_option(option_key)) -- "a", "b", ..."z"
 		-- TODO: this is adding too much space - could be something with the \n??
 		-- TODO: also we might be able to handle this in a way we don't have to call update_text_size, and scroll stuff in multiple places
-		write_text(self, story_manager:select_player_option(option_key))
+		write_text(self, story_manager:select_player_option(index))
+		write_text(self, story_manager:fetch_npc_response())
 		destroy_player_options(self)
 	end)
 
@@ -151,12 +151,10 @@ function init(self)
 		if new_state == "paused" then
 			-- create buttons based on the number of options
 			local player_options = story_manager:fetch_player_options()
-			local idx = 1
 
-			-- TODO: currently the options come in randomly (lua nature), either sort keys (alphabetically) or find another solution
-			for k, v in pairs(player_options) do
-				create_player_option(self, k, v, idx)
-				idx = idx + 1
+			for idx in ipairs(player_options) do
+				local _, option_text = next(player_options[idx])
+				create_player_option(self, option_text, idx)
 			end
 		end
 	end
