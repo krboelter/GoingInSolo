@@ -5,7 +5,6 @@ local M = {}
 
 M.chapter = nil -- string
 M.sequence = nil -- number
-M.story_table = {} -- Array<string>
 M.state = "running" -- "running" | "paused"
 M.on_state_changed = nil -- callback
 M.last_player_response = nil -- "a", "b", "c" ... "z"

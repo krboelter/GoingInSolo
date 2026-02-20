@@ -5,10 +5,9 @@ local typewriter = require "scripts.widgets.typewriter"
 
 local TOUCH = hash("touch")
 
--- TODO: bug - when the player responds the new_height gets all messed up...
--- updates the container size based on the text (for scroll)
+-- gets the container size based on the text (for scroll)
 local function get_text_size(self, node)
-	local font_name = gui.get_font(node) -- TODO: this only gets the size of the current node (not all combined)
+	local font_name = gui.get_font(node)
 	local font = gui.get_font_resource(font_name)
 	local text = gui.get_text(node)
 
@@ -100,15 +99,13 @@ local function create_player_option(self, option_text, index)
 	gui.set_parent(box, gui.get_node("player_response_container"))
 	
 	local size = gui.get_size(box)
-	local y_offset = size.y * (index - 1) -- maybe add spacing??
+	local y_offset = size.y * (index - 1)
 
 	gui.set_position(box, vmath.vector3(0, -y_offset, 0))
 	gui.set_enabled(box, true)
 	gui.set_text(text_nodes, option_text)
 
 	local button = self.druid:new_button(box, function()
-		-- TODO: this is adding too much space - could be something with the \n??
-		-- TODO: also we might be able to handle this in a way we don't have to call update_text_size, and scroll stuff in multiple places
 		write_text(self, story_manager:select_player_option(index))
 		write_text(self, story_manager:fetch_npc_response())
 		destroy_player_options(self)
