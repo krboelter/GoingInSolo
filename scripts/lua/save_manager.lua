@@ -3,15 +3,15 @@
 
 local M = {}
 
--- initialize 
+-- save manager state
 M.save_data = {
 	story_chapter = "intro",
 	sequence_key = 1
 }
 
 -- used for resetting the game (for testing)
-function M.reset()
-	M.save_data = {
+function M:reset()
+	self.save_data = {
 		story_chapter = "intro",
 		sequence_key = 1
 	}
