@@ -1,6 +1,6 @@
 -- This is where player info belongs:
 -- Name, age, gender, class
 
-local player = {}
+local M = {}
 
-return player
+return M
