@@ -1,3 +1,4 @@
+script: "/scripts/character_creation.gui_script"
 nodes {
   position {
     x: 64.0
@@ -20,6 +21,129 @@ nodes {
   adjust_mode: ADJUST_MODE_STRETCH
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 29.0
+    y: -58.0
+  }
+  type: TYPE_TEMPLATE
+  id: "hair_color_carousel"
+  parent: "root"
+  inherit_alpha: true
+  template: "/scripts/widgets/carousel/carousel.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "hair_color_carousel/root"
+  parent: "hair_color_carousel"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hair_color_carousel/left"
+  parent: "hair_color_carousel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hair_color_carousel/text_container"
+  parent: "hair_color_carousel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "hair_color_carousel/value_text"
+  parent: "hair_color_carousel/text_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hair_color_carousel/right"
+  parent: "hair_color_carousel/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 29.0
+    y: -128.0
+  }
+  type: TYPE_TEMPLATE
+  id: "races"
+  parent: "root"
+  inherit_alpha: true
+  template: "/scripts/widgets/carousel/carousel.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "races/root"
+  parent: "races"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "races/left"
+  parent: "races/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "races/text_container"
+  parent: "races/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "races/value_text"
+  parent: "races/text_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "races/right"
+  parent: "races/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 29.0
+    y: -198.0
+  }
+  type: TYPE_TEMPLATE
+  id: "classes"
+  parent: "root"
+  inherit_alpha: true
+  template: "/scripts/widgets/carousel/carousel.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "classes/root"
+  parent: "classes"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "classes/left"
+  parent: "classes/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "classes/text_container"
+  parent: "classes/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "classes/value_text"
+  parent: "classes/text_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "classes/right"
+  parent: "classes/root"
+  template_node_child: true
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

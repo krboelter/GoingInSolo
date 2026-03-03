@@ -49,7 +49,8 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == OPEN_MAP then
 		switch_scene(self, "map")
 	elseif message_id == OPEN_TASKS then
-		switch_scene(self, "tasks")
+		-- switch_scene(self, "tasks")
+		switch_scene(self, "character_creator")
 	elseif message_id == OPEN_INVENTORY then
 		switch_scene(self, "inventory")
 	end

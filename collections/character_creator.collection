@@ -2,5 +2,9 @@ name: "character_creator"
 scale_along_z: 0
 embedded_instances {
   id: "character_creation"
-  data: ""
+  data: "components {\n"
+  "  id: \"character_creation\"\n"
+  "  component: \"/ui/character_creation.gui\"\n"
+  "}\n"
+  ""
 }

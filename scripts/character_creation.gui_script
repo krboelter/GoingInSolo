@@ -1,0 +1,42 @@
+local druid = require("druid.druid")
+local carousel = require "scripts.widgets.carousel.carousel"
+
+function init(self)
+	self.druid = druid.new(self)
+
+	local hair_colors = {
+		"Black",
+		"Brown",
+		"Red",
+		"Blond"
+	}
+	self.hair_color = self.druid:new_widget(carousel, "hair_color_carousel", nil, hair_colors)
+
+	local races = {
+		"Human",
+		"Wood Elf",
+		"Dark Elf",
+		"Dwarf",
+		"Halfling"
+	}
+	self.races = self.druid:new_widget(carousel, "races", nil, races)
+
+	local classes = {
+		"Warrior",
+		"Dark Mage",
+		"Ranger",
+		"Cleric",
+		"Assassin"
+	}
+	self.classes = self.druid:new_widget(carousel, "classes", nil, classes)
+end
+
+function final(self)
+end
+
+function on_message(self, message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

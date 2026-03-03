@@ -55,6 +55,12 @@ embedded_instances {
   "  data: \"collection: \\\"/collections/inventory.collection\\\"\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"character_creator_proxy\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/collections/character_creator.collection\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
 }
 embedded_instances {
@@ -62,6 +68,14 @@ embedded_instances {
   data: "components {\n"
   "  id: \"side_menu\"\n"
   "  component: \"/ui/side_menu.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "main"
+  data: "components {\n"
+  "  id: \"main\"\n"
+  "  component: \"/main/main.script\"\n"
   "}\n"
   ""
 }
