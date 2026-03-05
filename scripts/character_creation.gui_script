@@ -1,25 +1,9 @@
 local druid = require("druid.druid")
 local carousel = require "scripts.widgets.carousel.carousel"
+local typewritter_scroller = require "scripts.widgets.typewriter_scroller.typewritter_scroller"
 
 function init(self)
 	self.druid = druid.new(self)
-
-	local hair_colors = {
-		"Black",
-		"Brown",
-		"Red",
-		"Blond"
-	}
-	self.hair_color = self.druid:new_widget(carousel, "hair_color_carousel", nil, hair_colors)
-
-	local races = {
-		"Human",
-		"Wood Elf",
-		"Dark Elf",
-		"Dwarf",
-		"Halfling"
-	}
-	self.races = self.druid:new_widget(carousel, "races", nil, races)
 
 	local classes = {
 		"Warrior",
@@ -28,13 +12,47 @@ function init(self)
 		"Cleric",
 		"Assassin"
 	}
+	---@class carousel classes
 	self.classes = self.druid:new_widget(carousel, "classes", nil, classes)
+	self.classes.msg_id = "selected_class"
+
+	---@class typewritter_scroller classes_scroller
+	self.classes_scroller = self.druid:new_widget(typewritter_scroller, "classes_scroller", nil)
+
+	local races = {
+		"Human",
+		"Wood Elf",
+		"Dark Elf",
+		"Dwarf",
+		"Halfling"
+	}
+	---@class carousel races
+	self.races = self.druid:new_widget(carousel, "races", nil, races)
+	self.races.msg_id = "selected_race"
+
+	local hair_colors = {
+		"Black",
+		"Brown",
+		"Red",
+		"Blond"
+	}
+	---@class carousel hair_color
+	self.hair_color = self.druid:new_widget(carousel, "hair_color", nil, hair_colors)
+	self.hair_color.msg_id = "selected_hair_color"
+
+	---@class typewritter_scroller hair_color_scroller
+	self.hair_color_scroller = self.druid:new_widget(typewritter_scroller, "hair_color_scroller", nil)
 end
 
 function final(self)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash("selected_hair_color") then
+		self.hair_color_scroller:set_text(message.item)
+	elseif message_id == hash("selected_class") then
+		self.classes_scroller:set_text(message.item)
+	end
 end
 
 function on_input(self, action_id, action)

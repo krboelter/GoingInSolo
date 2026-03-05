@@ -1,6 +1,8 @@
---@type carousel: druid.widget
+---@class carousel: druid.widget
+---@field msg_id string - REQUIRED
 local M = {}
 
+---@param items table<string> - An array of items to cycle through
 function M:init(items)
 	self.items = items
 	self.current_index = 1
@@ -14,12 +16,16 @@ function M:init(items)
 end
 
 function M:on_left()
-	print("LEFT")
 	self.current_index = self.current_index - 1
 	if self.current_index < 1 then
 		-- if we get to the first, cycle to the last
 		self.current_index = #self.items
 	end
+	
+	if self.msg_id == nil then
+		print("WARNING: self.msg_id has not been sent so I cannot send a message!!!")
+	end
+	msg.post("/character_creation", self.msg_id, { item = self.items[self.current_index] })
 	
 	self:_animate_slide_out("left", function()
 		self:_update_text()
@@ -29,12 +35,16 @@ function M:on_left()
 end
 
 function M:on_right()
-	print("RIGHT")
 	self.current_index = self.current_index + 1
 	if self.current_index > #self.items then
 		-- if we get to the last, cycle to the fist
 		self.current_index = 1
 	end
+
+	if self.msg_id == nil then
+		print("WARNING: self.msg_id has not been sent so I cannot send a message!!!")
+	end
+	msg.post("/character_creation", self.msg_id, { item = self.items[self.current_index] })
 
 	self:_animate_slide_out("right", function()
 		self:_update_text()

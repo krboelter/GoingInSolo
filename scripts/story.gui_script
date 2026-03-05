@@ -2,28 +2,9 @@ local druid = require("druid.druid")
 local save_manager = require "scripts.lua.save_manager"
 local story_manager = require "scripts.lua.story_manager"
 local typewriter = require "scripts.widgets.typewriter"
+local utils = require "scripts.utils"
 
 local TOUCH = hash("touch")
-
--- gets the container size based on the text (for scroll)
-local function get_text_size(self, node)
-	local font_name = gui.get_font(node)
-	local font = gui.get_font_resource(font_name)
-	local text = gui.get_text(node)
-
-	local options = {
-		width = gui.get_size(node).x,
-		line_break = gui.get_line_break(node),
-		leading = gui.get_leading(node),
-		tracking = gui.get_tracking(node)
-	}
-	local metrics = resource.get_text_metrics(font, text, options)
-
-	local scale = gui.get_scale(node)
-	local rendered_height = metrics.height * scale.y
-	
-	return rendered_height
-end
 
 local function write_text(self, text_table)
 	if self.current_widget_text then
@@ -41,11 +22,10 @@ local function write_text(self, text_table)
 	local new_text_node = nodes["text_template"]
 	gui.set_id(new_text_node, "text_node_" .. name)
 	gui.set_parent(new_text_node, self.story_text_content, true)
-	gui.set_pivot(new_text_node, gui.PIVOT_NW)
 	
 	-- temporarily set text to measure new text height
 	gui.set_text(new_text_node, text)
-	local new_text_size = get_text_size(self, new_text_node)
+	local new_text_size = utils.get_text_size(self, new_text_node)
 	-- remove text after measurements so we can use the typewriter
 	gui.set_text(new_text_node, "")
 

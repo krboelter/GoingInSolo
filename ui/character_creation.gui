@@ -25,48 +25,48 @@ nodes {
 nodes {
   position {
     x: 29.0
-    y: -58.0
+    y: -359.0
   }
   type: TYPE_TEMPLATE
-  id: "hair_color_carousel"
+  id: "hair_color"
   parent: "root"
   inherit_alpha: true
   template: "/scripts/widgets/carousel/carousel.gui"
 }
 nodes {
   type: TYPE_BOX
-  id: "hair_color_carousel/root"
-  parent: "hair_color_carousel"
+  id: "hair_color/root"
+  parent: "hair_color"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "hair_color_carousel/left"
-  parent: "hair_color_carousel/root"
+  id: "hair_color/left"
+  parent: "hair_color/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "hair_color_carousel/text_container"
-  parent: "hair_color_carousel/root"
+  id: "hair_color/text_container"
+  parent: "hair_color/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "hair_color_carousel/value_text"
-  parent: "hair_color_carousel/text_container"
+  id: "hair_color/value_text"
+  parent: "hair_color/text_container"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "hair_color_carousel/right"
-  parent: "hair_color_carousel/root"
+  id: "hair_color/right"
+  parent: "hair_color/root"
   template_node_child: true
 }
 nodes {
   position {
     x: 29.0
-    y: -128.0
+    y: -218.0
   }
   type: TYPE_TEMPLATE
   id: "races"
@@ -107,7 +107,7 @@ nodes {
 nodes {
   position {
     x: 29.0
-    y: -198.0
+    y: -68.0
   }
   type: TYPE_TEMPLATE
   id: "classes"
@@ -143,6 +143,64 @@ nodes {
   type: TYPE_BOX
   id: "classes/right"
   parent: "classes/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 29.0
+    y: -463.0
+  }
+  type: TYPE_TEMPLATE
+  id: "hair_color_scroller"
+  parent: "root"
+  inherit_alpha: true
+  template: "/scripts/widgets/typewriter_scroller/typewriter_scroller.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "hair_color_scroller/scroller_container"
+  parent: "hair_color_scroller"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hair_color_scroller/scroller_content"
+  parent: "hair_color_scroller/scroller_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "hair_color_scroller/scroller_text"
+  parent: "hair_color_scroller/scroller_content"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 29.0
+    y: -171.0
+  }
+  type: TYPE_TEMPLATE
+  id: "classes_scroller"
+  parent: "root"
+  inherit_alpha: true
+  template: "/scripts/widgets/typewriter_scroller/typewriter_scroller.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "classes_scroller/scroller_container"
+  parent: "classes_scroller"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "classes_scroller/scroller_content"
+  parent: "classes_scroller/scroller_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "classes_scroller/scroller_text"
+  parent: "classes_scroller/scroller_content"
   template_node_child: true
 }
 material: "/builtins/materials/gui.material"
