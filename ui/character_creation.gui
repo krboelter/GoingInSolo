@@ -25,7 +25,7 @@ nodes {
 nodes {
   position {
     x: 29.0
-    y: -359.0
+    y: -368.0
   }
   type: TYPE_TEMPLATE
   id: "hair_color"
@@ -148,7 +148,7 @@ nodes {
 nodes {
   position {
     x: 29.0
-    y: -463.0
+    y: -472.0
   }
   type: TYPE_TEMPLATE
   id: "hair_color_scroller"
@@ -201,6 +201,35 @@ nodes {
   type: TYPE_TEXT
   id: "classes_scroller/scroller_text"
   parent: "classes_scroller/scroller_content"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 29.0
+    y: -321.0
+  }
+  type: TYPE_TEMPLATE
+  id: "races_scroller"
+  parent: "root"
+  inherit_alpha: true
+  template: "/scripts/widgets/typewriter_scroller/typewriter_scroller.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "races_scroller/scroller_container"
+  parent: "races_scroller"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "races_scroller/scroller_content"
+  parent: "races_scroller/scroller_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "races_scroller/scroller_text"
+  parent: "races_scroller/scroller_content"
   template_node_child: true
 }
 material: "/builtins/materials/gui.material"

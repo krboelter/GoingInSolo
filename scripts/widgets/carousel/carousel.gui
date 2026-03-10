@@ -21,7 +21,7 @@ nodes {
 }
 nodes {
   position {
-    x: 20.0
+    x: 180.0
     y: -20.0
   }
   size {
@@ -78,7 +78,7 @@ nodes {
 }
 nodes {
   position {
-    x: 180.0
+    x: 20.0
     y: -20.0
   }
   size {

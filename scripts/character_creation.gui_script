@@ -5,20 +5,20 @@ local typewritter_scroller = require "scripts.widgets.typewriter_scroller.typewr
 function init(self)
 	self.druid = druid.new(self)
 
-	local classes = {
+	-- CLASSES --
+	local classes = { -- TODO: migrate all of these to a class manager with descriptions etc.
 		"Warrior",
 		"Dark Mage",
 		"Ranger",
 		"Cleric",
 		"Assassin"
 	}
-	---@class carousel classes
 	self.classes = self.druid:new_widget(carousel, "classes", nil, classes)
 	self.classes.msg_id = "selected_class"
-
-	---@class typewritter_scroller classes_scroller
 	self.classes_scroller = self.druid:new_widget(typewritter_scroller, "classes_scroller", nil)
+	self.classes_scroller:set_text(classes[1])
 
+	-- RACES --
 	local races = {
 		"Human",
 		"Wood Elf",
@@ -26,32 +26,34 @@ function init(self)
 		"Dwarf",
 		"Halfling"
 	}
-	---@class carousel races
 	self.races = self.druid:new_widget(carousel, "races", nil, races)
 	self.races.msg_id = "selected_race"
+	self.races_scroller = self.druid:new_widget(typewritter_scroller, "races_scroller", nil)
+	self.races_scroller:set_text(races[1])
 
+	-- HAIR COLORS --
 	local hair_colors = {
 		"Black",
 		"Brown",
 		"Red",
 		"Blond"
 	}
-	---@class carousel hair_color
 	self.hair_color = self.druid:new_widget(carousel, "hair_color", nil, hair_colors)
 	self.hair_color.msg_id = "selected_hair_color"
-
-	---@class typewritter_scroller hair_color_scroller
 	self.hair_color_scroller = self.druid:new_widget(typewritter_scroller, "hair_color_scroller", nil)
+	self.hair_color_scroller:set_text(hair_colors[1])
 end
 
 function final(self)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("selected_hair_color") then
-		self.hair_color_scroller:set_text(message.item)
-	elseif message_id == hash("selected_class") then
+	if message_id == hash("selected_class") then
 		self.classes_scroller:set_text(message.item)
+	elseif message_id == hash("selected_race") then
+		self.races_scroller:set_text(message.item)
+	elseif message_id == hash("selected_hair_color") then
+		self.hair_color_scroller:set_text(message.item)
 	end
 end
 
